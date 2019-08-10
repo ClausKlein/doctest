@@ -108,11 +108,11 @@ TEST_CASE("REQUIRE level of asserts fail and abort the test case - 5") {
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 4") {
-	REQUIRE_THROWS_WITH(throw_if(false, ""), "whops!");
+    REQUIRE_THROWS_WITH(throw_if(false, ""), "whops!");
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 5") {
-	REQUIRE_THROWS_WITH(throw_if(true, ""), "whops!");
+    REQUIRE_THROWS_WITH(throw_if(true, ""), "whops!");
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 6") {
@@ -174,6 +174,4 @@ static void someAssertsInFunction() {
     CHECK_UNARY_FALSE(a != b);
 }
 
-TEST_CASE("some asserts used in a function called by a test case") {
-    someAssertsInFunction();
-}
+TEST_CASE("some asserts used in a function called by a test case") { someAssertsInFunction(); }

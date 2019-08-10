@@ -379,7 +379,7 @@ DOCTEST_GCC_SUPPRESS_WARNING_POP
 // see this issue on why this is needed: https://github.com/onqtam/doctest/issues/183
 #include <ostream>
 #endif // VS 2019
-#else // DOCTEST_CONFIG_USE_STD_HEADERS
+#else  // DOCTEST_CONFIG_USE_STD_HEADERS
 
 #if DOCTEST_CLANG
 // to detect if libc++ is being used with clang (the _LIBCPP_VERSION identifier)
@@ -1016,7 +1016,8 @@ namespace detail {
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
     [[noreturn]]
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
-    DOCTEST_INTERFACE void throwException();
+    DOCTEST_INTERFACE void
+    throwException();
 
     struct DOCTEST_INTERFACE Subcase
     {
@@ -1302,8 +1303,10 @@ namespace detail {
     DOCTEST_INTERFACE int  setTestSuite(const TestSuite& ts);
     DOCTEST_INTERFACE bool isDebuggerActive();
 
-    template<typename T>
-    int instantiationHelper(const T&) { return 0; }
+    template <typename T>
+    int instantiationHelper(const T&) {
+        return 0;
+    }
 
     namespace binaryAssertComparison {
         enum Enum
@@ -1950,11 +1953,13 @@ int registerReporter(const char* name, int priority) {
         struct iter<std::tuple<Type, Rest...>>                                                     \
         {                                                                                          \
             iter(const char* file, unsigned line, int index) {                                     \
-                doctest::detail::regTest(doctest::detail::TestCase(func<Type>, file, line,         \
-                                            doctest_detail_test_suite_ns::getCurrentTestSuite(),   \
-                                            doctest::detail::type_to_string<Type>(),               \
-                                            int(line) * 1000 + index)                              \
-                                         * dec);                                                   \
+                doctest::detail::regTest(                                                          \
+                        doctest::detail::TestCase(                                                 \
+                                func<Type>, file, line,                                            \
+                                doctest_detail_test_suite_ns::getCurrentTestSuite(),               \
+                                doctest::detail::type_to_string<Type>(),                           \
+                                int(line) * 1000 + index) *                                        \
+                        dec);                                                                      \
                 iter<std::tuple<Rest...>>(file, line, index + 1);                                  \
             }                                                                                      \
         };                                                                                         \
@@ -1972,16 +1977,18 @@ int registerReporter(const char* name, int priority) {
                                            DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_))
 
 #define DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, anon, ...)                                 \
-    DOCTEST_GLOBAL_NO_WARNINGS(DOCTEST_CAT(anon, DUMMY)) =                                         \
-        doctest::detail::instantiationHelper(DOCTEST_CAT(id, ITERATOR)<__VA_ARGS__>(__FILE__, __LINE__, 0));\
+    DOCTEST_GLOBAL_NO_WARNINGS(DOCTEST_CAT(anon, DUMMY)) = doctest::detail::instantiationHelper(   \
+            DOCTEST_CAT(id, ITERATOR) < __VA_ARGS__ > (__FILE__, __LINE__, 0));                    \
     DOCTEST_GLOBAL_NO_WARNINGS_END()
 
 #define DOCTEST_TEST_CASE_TEMPLATE_INVOKE(id, ...)                                                 \
-    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_), std::tuple<__VA_ARGS__>) \
+    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_),         \
+                                                std::tuple<__VA_ARGS__>)                           \
     typedef int DOCTEST_ANONYMOUS(_DOCTEST_ANON_FOR_SEMICOLON_)
 
 #define DOCTEST_TEST_CASE_TEMPLATE_APPLY(id, ...)                                                  \
-    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_), __VA_ARGS__) \
+    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_),         \
+                                                __VA_ARGS__)                                       \
     typedef int DOCTEST_ANONYMOUS(_DOCTEST_ANON_FOR_SEMICOLON_)
 
 #define DOCTEST_TEST_CASE_TEMPLATE_IMPL(dec, T, anon, ...)                                         \

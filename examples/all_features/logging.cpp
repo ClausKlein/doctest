@@ -13,7 +13,7 @@ TEST_CASE("logging the counter of a loop") {
     vec.push_back(4);
     vec.push_back(8);
     vec.push_back(16);
-    
+
     INFO("current iteration of loop:");
     for(unsigned i = 0; i < vec.size(); ++i) {
         CAPTURE(i);
@@ -23,15 +23,19 @@ TEST_CASE("logging the counter of a loop") {
 
 static int someTests() {
     int some_var = 42;
-    INFO("lots of captures - some on heap: " << some_var << " " << some_var << " " << some_var << ";");
+    INFO("lots of captures - some on heap: " << some_var << " " << some_var << " " << some_var
+                                             << ";");
     FAIL_CHECK("forcing the many captures (including those on the heap) to be stringified");
     return some_var;
 }
 
 TEST_CASE("a test case that will end from an exception") {
     int some_var = someTests();
-    INFO("someTests() returned: " << some_var); // note that we have to use a local variable - cannot pass a temporary
-    INFO("this should be printed if an exception is thrown even if no assert has failed: " << some_var);
+    INFO(
+            "someTests() returned: "
+            << some_var); // note that we have to use a local variable - cannot pass a temporary
+    INFO("this should be printed if an exception is thrown even if no assert has failed: "
+         << some_var);
     {
         INFO("in a nested scope this should be printed as well: " << some_var);
         {

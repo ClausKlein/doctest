@@ -5,12 +5,12 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <cstdio>
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
-template<typename T>
+template <typename T>
 static int conditional_throw(bool in, const T& ex) {
     if(in)
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
         throw ex;
-#else // DOCTEST_CONFIG_NO_EXCEPTIONS
+#else  // DOCTEST_CONFIG_NO_EXCEPTIONS
         ((void)ex);
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
     return 42;
@@ -31,7 +31,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #else // _MSC_VER
 #define LoadDynamicLib(lib) LoadLibrary("lib" lib ".dll")
 #endif // _MSC_VER
-#else // _WIN32
+#else  // _WIN32
 #include <dlfcn.h>
 #ifdef __APPLE__
 #define LoadDynamicLib(lib) dlopen("lib" lib ".dylib", RTLD_NOW)
@@ -54,8 +54,8 @@ int main(int argc, char** argv) {
     LoadDynamicLib("plugin"); // load the plugin so tests from it get registered
 
     doctest::Context context(argc, argv);
-    int res = context.run();
-    
+    int              res = context.run();
+
     if(context.shouldExit()) // important - query flags (and --exit) rely on the user doing this
         return res;          // propagate the result of the tests
 

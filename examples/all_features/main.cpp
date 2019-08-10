@@ -3,7 +3,7 @@
 
 #include "header.h"
 
-int program();
+int  program();
 void some_program_code(int argc, char** argv);
 
 int main(int argc, char** argv) {

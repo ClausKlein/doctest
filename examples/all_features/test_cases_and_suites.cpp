@@ -20,20 +20,14 @@ TEST_CASE("should fail because of an exception") {
 }
 
 TEST_SUITE("scoped test suite") {
-    TEST_CASE("part of scoped") {
-        FAIL("");
-    }
+    TEST_CASE("part of scoped") { FAIL(""); }
 
-    TEST_CASE("part of scoped 2") {
-        FAIL("");
-    }
+    TEST_CASE("part of scoped 2") { FAIL(""); }
 }
 
 TEST_SUITE_BEGIN("some TS"); // begin "some TS"
 
-TEST_CASE("part of some TS") {
-    FAIL("");
-}
+TEST_CASE("part of some TS") { FAIL(""); }
 
 TEST_SUITE_END(); // ends "some TS"
 
