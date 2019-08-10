@@ -38,7 +38,7 @@ struct MyXmlReporter : public IReporter
     void test_run_end(const TestRunStats& /*in*/) override {}
 
     void test_case_start(const TestCaseData& in) override { tc = &in; }
-    
+
     void test_case_reenter(const TestCaseData& /*in*/) override {}
 
     void test_case_end(const CurrentTestCaseStats& /*in*/) override {}
@@ -49,9 +49,7 @@ struct MyXmlReporter : public IReporter
         std::lock_guard<std::mutex> lock(mutex);
     }
 
-    void subcase_end() override {
-        std::lock_guard<std::mutex> lock(mutex);
-    }
+    void subcase_end() override { std::lock_guard<std::mutex> lock(mutex); }
 
     void log_assert(const AssertData& in) override {
         // don't include successful asserts by default - this is done here

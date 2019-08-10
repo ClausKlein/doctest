@@ -35,9 +35,9 @@ TEST_CASE("exceptions-related macros") {
     CHECK_THROWS_AS(throw_if(true, 0), char); // fails
     CHECK_THROWS_AS(throw_if(false, 0), int); // fails
 
-    CHECK_THROWS_WITH(throw_if(true, "whops!"), "whops! no match!"); // fails
+    CHECK_THROWS_WITH(throw_if(true, "whops!"), "whops! no match!");          // fails
     CHECK_THROWS_WITH_AS(throw_if(true, "whops!"), "whops! no match!", bool); // fails
-    CHECK_THROWS_WITH_AS(throw_if(true, "whops!"), "whops!", int); // fails
+    CHECK_THROWS_WITH_AS(throw_if(true, "whops!"), "whops!", int);            // fails
 
     CHECK_NOTHROW(throw_if(true, 0)); // fails
     CHECK_NOTHROW(throw_if(false, 0));
@@ -113,19 +113,19 @@ TEST_CASE("REQUIRE level of asserts fail and abort the test case - 5") {
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 6") {
-	REQUIRE_THROWS_WITH(throw_if(false, ""), "whops!");
+    REQUIRE_THROWS_WITH(throw_if(false, ""), "whops!");
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 7") {
-	REQUIRE_THROWS_WITH(throw_if(true, ""), "whops!");
+    REQUIRE_THROWS_WITH(throw_if(true, ""), "whops!");
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 8") {
-	REQUIRE_THROWS_WITH_AS(throw_if(false, ""), "whops!", bool);
+    REQUIRE_THROWS_WITH_AS(throw_if(false, ""), "whops!", bool);
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 9") {
-	REQUIRE_THROWS_WITH_AS(throw_if(true, ""), "whops!", bool);
+    REQUIRE_THROWS_WITH_AS(throw_if(true, ""), "whops!", bool);
     MESSAGE("should not be reached!");
 }
 TEST_CASE("REQUIRE level of asserts fail and abort the test case - 10") {
@@ -188,6 +188,4 @@ static void someAssertsInFunction() {
     CHECK_UNARY_FALSE(a != b);
 }
 
-TEST_CASE("some asserts used in a function called by a test case") {
-    someAssertsInFunction();
-}
+TEST_CASE("some asserts used in a function called by a test case") { someAssertsInFunction(); }

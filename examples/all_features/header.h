@@ -17,24 +17,16 @@ int throw_if(bool in, const T& ex) {
 // stuff that should be fine when used in a header - test cases for example should be registered only once
 
 TEST_SUITE("some TS") {
-    TEST_CASE("in TS") {
-        FAIL("");
-    }
+    TEST_CASE("in TS") { FAIL(""); }
 }
 
-REGISTER_EXCEPTION_TRANSLATOR(int& in) {
-    return doctest::toString(in);
-}
+REGISTER_EXCEPTION_TRANSLATOR(int& in) { return doctest::toString(in); }
 
 TYPE_TO_STRING(doctest::String);
 
-TEST_CASE_TEMPLATE("template 1", T, char) {
-    FAIL("");
-}
+TEST_CASE_TEMPLATE("template 1", T, char) { FAIL(""); }
 
-TEST_CASE_TEMPLATE_DEFINE("template 2", T, header_test) {
-    FAIL("");
-}
+TEST_CASE_TEMPLATE_DEFINE("template 2", T, header_test) { FAIL(""); }
 
 TEST_CASE_TEMPLATE_INVOKE(header_test, doctest::String);
 

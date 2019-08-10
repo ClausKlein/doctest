@@ -24,17 +24,17 @@ creating empty vector
 
 using namespace std;
 
-set<pair<const char*, int> > passed_subcases;
-set<int> entered_levels;
-int current_level;
-bool has_skipped;
+set<pair<const char*, int>> passed_subcases;
+set<int>                    entered_levels;
+int                         current_level;
+bool                        has_skipped;
 
-struct Subcase {
+struct Subcase
+{
     Subcase(const char* file, int line)
-        : m_entered(false)
-        , m_file(file)
-        , m_line(line)
-    {
+            : m_entered(false)
+            , m_file(file)
+            , m_line(line) {
         m_entered = false;
 
         // if we have already completed it
@@ -63,9 +63,9 @@ struct Subcase {
 
     operator bool() const { return m_entered; }
 
-    bool m_entered;
+    bool        m_entered;
     const char* m_file;
-    int m_line;
+    int         m_line;
 };
 
 #define STR_CONCAT_IMPL(s1, s2) s1##s2
@@ -106,7 +106,7 @@ void test() {
 int main() {
     passed_subcases.clear();
     do {
-        has_skipped = false;
+        has_skipped   = false;
         current_level = 0;
         entered_levels.clear();
         test();

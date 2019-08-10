@@ -24,9 +24,7 @@ TEST_CASE("threads...") {
     CAPTURE(data_1); // will not be used for assertions in other threads
 
     // subcases have to be used only in the main thread (where the test runner is)
-    SUBCASE("test runner thread") {
-        call_from_thread(data_1);
-    }
+    SUBCASE("test runner thread") { call_from_thread(data_1); }
 
     // normal threads which are assumed not to throw
     SUBCASE("spawned threads") {

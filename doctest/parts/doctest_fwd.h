@@ -370,7 +370,7 @@ DOCTEST_GCC_SUPPRESS_WARNING_POP
 // see this issue on why this is needed: https://github.com/onqtam/doctest/issues/183
 #include <ostream>
 #endif // VS 2019
-#else // DOCTEST_CONFIG_USE_STD_HEADERS
+#else  // DOCTEST_CONFIG_USE_STD_HEADERS
 
 #if DOCTEST_CLANG
 // to detect if libc++ is being used with clang (the _LIBCPP_VERSION identifier)
@@ -389,7 +389,7 @@ DOCTEST_GCC_SUPPRESS_WARNING_POP
 DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4643)
 
 DOCTEST_STD_NAMESPACE_BEGIN // NOLINT (cert-dcl58-cpp)
-typedef decltype(nullptr) nullptr_t;
+        typedef decltype(nullptr) nullptr_t;
 template <class charT>
 struct char_traits;
 template <>
@@ -580,7 +580,7 @@ namespace assertType {
         DT_WARN_THROWS_WITH    = is_throws_with | is_warn,
         DT_CHECK_THROWS_WITH   = is_throws_with | is_check,
         DT_REQUIRE_THROWS_WITH = is_throws_with | is_require,
-        
+
         DT_WARN_THROWS_WITH_AS    = is_throws_with | is_throws_as | is_warn,
         DT_CHECK_THROWS_WITH_AS   = is_throws_with | is_throws_as | is_check,
         DT_REQUIRE_THROWS_WITH_AS = is_throws_with | is_throws_as | is_require,
@@ -787,7 +787,7 @@ namespace detail {
     DOCTEST_INTERFACE void my_memcpy(void* dest, const void* src, unsigned num);
 
     DOCTEST_INTERFACE std::ostream* getTlsOss(); // returns a thread-local ostringstream
-    DOCTEST_INTERFACE String getTlsOssResult();
+    DOCTEST_INTERFACE String        getTlsOssResult();
 
     template <bool C>
     struct StringMakerBase
@@ -989,7 +989,8 @@ namespace detail {
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
     [[noreturn]]
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
-    DOCTEST_INTERFACE void throwException();
+    DOCTEST_INTERFACE void
+    throwException();
 
     struct DOCTEST_INTERFACE Subcase
     {
@@ -1262,8 +1263,10 @@ namespace detail {
     DOCTEST_INTERFACE int  setTestSuite(const TestSuite& ts);
     DOCTEST_INTERFACE bool isDebuggerActive();
 
-    template<typename T>
-    int instantiationHelper(const T&) { return 0; }
+    template <typename T>
+    int instantiationHelper(const T&) {
+        return 0;
+    }
 
     namespace binaryAssertComparison {
         enum Enum
@@ -1480,23 +1483,27 @@ namespace detail {
     DOCTEST_INTERFACE void toStream(std::ostream* s, int long long in);
     DOCTEST_INTERFACE void toStream(std::ostream* s, int long long unsigned in);
 
-    // ContextScope base class used to allow implementing methods of ContextScope 
+    // ContextScope base class used to allow implementing methods of ContextScope
     // that don't depend on the template parameter in doctest.cpp.
-    class DOCTEST_INTERFACE ContextScopeBase : public IContextScope {
+    class DOCTEST_INTERFACE ContextScopeBase : public IContextScope
+    {
     protected:
         ContextScopeBase();
 
         void destroy();
     };
 
-    template <typename L> class ContextScope : public ContextScopeBase
+    template <typename L>
+    class ContextScope : public ContextScopeBase
     {
-        const L &lambda_;
+        const L& lambda_;
 
     public:
-        explicit ContextScope(const L &lambda) : lambda_(lambda) {}
+        explicit ContextScope(const L& lambda)
+                : lambda_(lambda) {}
 
-        ContextScope(ContextScope &&other) : lambda_(other.lambda_) {}
+        ContextScope(ContextScope&& other)
+                : lambda_(other.lambda_) {}
 
         void stringify(std::ostream* s) const override { lambda_(s); }
 
@@ -1520,9 +1527,9 @@ namespace detail {
         bool log();
         void react();
     };
-    
+
     template <typename L>
-    ContextScope<L> MakeContextScope(const L &lambda) {
+    ContextScope<L> MakeContextScope(const L& lambda) {
         return ContextScope<L>(lambda);
     }
 } // namespace detail
@@ -1703,7 +1710,8 @@ struct DOCTEST_INTERFACE IReporter
 namespace detail {
     typedef IReporter* (*reporterCreatorFunc)(const ContextOptions&);
 
-    DOCTEST_INTERFACE void registerReporterImpl(const char* name, int prio, reporterCreatorFunc c, bool isReporter);
+    DOCTEST_INTERFACE void registerReporterImpl(const char* name, int prio, reporterCreatorFunc c,
+                                                bool isReporter);
 
     template <typename Reporter>
     IReporter* reporterCreator(const ContextOptions& o) {
@@ -1822,11 +1830,13 @@ int registerReporter(const char* name, int priority, bool isReporter) {
         struct iter<std::tuple<Type, Rest...>>                                                     \
         {                                                                                          \
             iter(const char* file, unsigned line, int index) {                                     \
-                doctest::detail::regTest(doctest::detail::TestCase(func<Type>, file, line,         \
-                                            doctest_detail_test_suite_ns::getCurrentTestSuite(),   \
-                                            doctest::detail::type_to_string<Type>(),               \
-                                            int(line) * 1000 + index)                              \
-                                         * dec);                                                   \
+                doctest::detail::regTest(                                                          \
+                        doctest::detail::TestCase(                                                 \
+                                func<Type>, file, line,                                            \
+                                doctest_detail_test_suite_ns::getCurrentTestSuite(),               \
+                                doctest::detail::type_to_string<Type>(),                           \
+                                int(line) * 1000 + index) *                                        \
+                        dec);                                                                      \
                 iter<std::tuple<Rest...>>(file, line, index + 1);                                  \
             }                                                                                      \
         };                                                                                         \
@@ -1844,16 +1854,18 @@ int registerReporter(const char* name, int priority, bool isReporter) {
                                            DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_))
 
 #define DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, anon, ...)                                 \
-    DOCTEST_GLOBAL_NO_WARNINGS(DOCTEST_CAT(anon, DUMMY)) =                                         \
-        doctest::detail::instantiationHelper(DOCTEST_CAT(id, ITERATOR)<__VA_ARGS__>(__FILE__, __LINE__, 0));\
+    DOCTEST_GLOBAL_NO_WARNINGS(DOCTEST_CAT(anon, DUMMY)) = doctest::detail::instantiationHelper(   \
+            DOCTEST_CAT(id, ITERATOR) < __VA_ARGS__ > (__FILE__, __LINE__, 0));                    \
     DOCTEST_GLOBAL_NO_WARNINGS_END()
 
 #define DOCTEST_TEST_CASE_TEMPLATE_INVOKE(id, ...)                                                 \
-    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_), std::tuple<__VA_ARGS__>) \
+    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_),         \
+                                                std::tuple<__VA_ARGS__>)                           \
     typedef int DOCTEST_ANONYMOUS(_DOCTEST_ANON_FOR_SEMICOLON_)
 
 #define DOCTEST_TEST_CASE_TEMPLATE_APPLY(id, ...)                                                  \
-    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_), __VA_ARGS__) \
+    DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE_IMPL(id, DOCTEST_ANONYMOUS(_DOCTEST_ANON_TMP_),         \
+                                                __VA_ARGS__)                                       \
     typedef int DOCTEST_ANONYMOUS(_DOCTEST_ANON_FOR_SEMICOLON_)
 
 #define DOCTEST_TEST_CASE_TEMPLATE_IMPL(dec, T, anon, ...)                                         \

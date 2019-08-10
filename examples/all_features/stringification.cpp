@@ -12,8 +12,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 DOCTEST_MSVC_SUPPRESS_WARNING(5045) // Spectre mitigation diagnostics
 
 // the standard forbids writing in the std namespace but it works on all compilers
-namespace std
-{
+namespace std {
 template <typename T>
 ostream& operator<<(ostream& stream, const vector<T>& in) {
     stream << "[";
@@ -25,13 +24,12 @@ ostream& operator<<(ostream& stream, const vector<T>& in) {
     stream << "]";
     return stream;
 }
-}
+} // namespace std
 
 // as an alternative you may write a specialization of doctest::StringMaker
-namespace doctest
-{
+namespace doctest {
 template <typename T>
-struct StringMaker<std::list<T> >
+struct StringMaker<std::list<T>>
 {
     static String convert(const std::list<T>& in) {
         std::ostringstream oss;
@@ -44,7 +42,7 @@ struct StringMaker<std::list<T> >
         return oss.str().c_str();
     }
 };
-}
+} // namespace doctest
 
 template <typename T, typename K>
 struct MyType
@@ -68,8 +66,7 @@ std::ostream& operator<<(std::ostream& stream, const MyType<T, K>& in) {
     return stream;
 }
 
-namespace Bar
-{
+namespace Bar {
 struct Foo
 {
     friend bool operator==(const Foo&, const Foo&) { return false; }
